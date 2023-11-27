@@ -1,5 +1,8 @@
 <template name="feed">
-  <div class="rounded-lg border-solid" style="opacity:{{hider}}">
+  <div
+    class="rounded-lg border-solid transition-opacity duration-1000"
+    style="opacity:{{hider}}"
+  >
     {{> captcha this}}
   </div>
   {{> challenge this}}

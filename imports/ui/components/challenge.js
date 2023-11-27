@@ -2,11 +2,22 @@ import "./challenge.html";
 
 import { index } from "../pages/home.js";
 
+export const hasFinished = new ReactiveVar(false);
+
 Template.challenge.onCreated(function () {
   this.hasInteracted = new ReactiveVar(false);
 });
 
 Template.challenge.events({
+  "keydown .challengeInput"(e) {
+    keyPress = e.originalEvent.key;
+    if (keyPress.startsWith("Arrow")) {
+      e.preventDefault();
+      console.log(keyPress);
+      return;
+    }
+  },
+
   "keyup .challengeInput"(e) {
     const instance = Template.instance();
 
@@ -17,7 +28,6 @@ Template.challenge.events({
     inputLength = e.currentTarget.value.length;
     if (inputLength >= captchaLength) {
       if (e.currentTarget.value == this) {
-        console.log("epic win!");
         e.currentTarget.value = "";
         index.set(index.get() + 1);
         // timeEnd = new Date();
@@ -25,7 +35,6 @@ Template.challenge.events({
         // secs = score / 1000;
         document.getElementById("challengeStatus").innerHTML = "✅ ";
       } else {
-        console.log("wrong challenge!");
         document.getElementById("challengeStatus").innerHTML = "❎ ";
       }
     }
@@ -46,7 +55,7 @@ startCounter = function () {
       secCount = Number(secs) - 1;
       if (secCount < 0) {
         clearInterval(timer);
-        console.log("finitos");
+        hasFinished.set(true);
         document.getElementById("challengeTimerSecs").innerHTML = "00";
         document.getElementById("challengeTimerDecs").innerHTML = "00";
         return;
