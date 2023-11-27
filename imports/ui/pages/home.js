@@ -30,7 +30,7 @@ export let index = new ReactiveVar(0);
 //   "pas un robot.",
 // ];
 
-const data = [
+const initialData = [
   "bonjour cryptique",
   "coucou hasardeux",
   "salut hypocrite",
@@ -42,13 +42,160 @@ const data = [
   "habile buongiorno",
 ];
 
+const aurevoirs = [
+  "goodbye",
+  "farewell",
+  "see you later",
+  "take care",
+  "au revoir",
+  "adieu",
+  "salut",
+  "à bientôt",
+  "auf wiedersehen",
+  "tschüss",
+  "bis bald",
+  "auf wiedersehen",
+  "tschüss",
+  "bis dann",
+  "ade",
+  "arrivederci",
+  "addio",
+  "ciao",
+  "a presto",
+  "adiós",
+  "hasta luego",
+  "hasta pronto",
+  "nos vemos",
+  "adjö",
+  "vi ses",
+  "viso gero",
+  "sudie",
+  "iki",
+  "ardievas",
+  "adeus",
+  "até logo",
+  "até breve",
+  "tchau",
+  "cheerio",
+  "haste ye back",
+  "guidbye",
+  "tschüss",
+  "bis bald",
+  "servus",
+  "la revedere",
+  "adio",
+  "pe curând",
+  "pa",
+  "szia",
+  "szervusz",
+  "tot ziens",
+  "vaarwel",
+  "tot later",
+  "doei",
+  "avvedeci",
+  "addiu",
+  "arrivederci",
+];
+
+const moreBonjours = [
+  "Hello",
+  "Hi",
+  "Hey",
+  "Bonjour",
+  "Salut",
+  "Coucou",
+  "Salutations",
+  "Grüezi",
+  "Guten Tag",
+  "Hallo",
+  "Servus",
+  "Buongiorno",
+  "Ciao",
+  "Salve",
+  "Salutoni",
+  "Hola",
+  "Buenas",
+  "Qué tal",
+  "Hej",
+  "Tja",
+  "Labas",
+  "Diena",
+  "Sveiki",
+  "Hei",
+  "Bom dia",
+  "Oi",
+  "Alô",
+  "Dia dhuit",
+  "Haigh",
+  "Hullo",
+  "Bonny morn",
+  "Aye",
+  "Grüß Gott",
+  "Hallo",
+  "Hoi",
+  "Buna",
+  "Alo",
+  "Szia",
+  "Üdvözlet",
+  "Hallo",
+  "Hoi",
+  "Dag",
+  "Bonghjornu",
+  "Salute",
+  "Salutu",
+  "Oghje",
+];
+
+const moreAdjectifs = [
+  "apathique",
+  "déterminé",
+  "désinvolte",
+  "résolu",
+  "définitif",
+  "terminal",
+  "sceptique",
+  "empathique",
+  "indifférent",
+  "assertif",
+  "illégal",
+  "coupable",
+  "pragmatique",
+  "passionné",
+  "zélé",
+  "décontracté",
+  "implacable",
+  "persévérant",
+  "confiant",
+  "dubitatif",
+  "nostalgique",
+  "stoïque",
+  "altruiste",
+  "blasé",
+  "truculent",
+  "intrépide",
+  "assertif",
+  "indolent",
+  "intrigué",
+  "tolérant",
+  "exalté",
+];
+
 Template.home.onCreated(function () {
   console.log(this.data.finished);
 });
 
 Template.home.helpers({
   theCaptcha() {
-    return data[index.get()];
+    if (index.get() >= initialData.length) {
+      var aurevoir = aurevoirs[Math.floor(Math.random() * aurevoirs.length)];
+      var adjectif =
+        moreAdjectifs[Math.floor(Math.random() * moreAdjectifs.length)];
+      return aurevoir + " " + adjectif;
+    }
+
+    // TODO :
+    // if cookie is present, directly serve generative stuff
+    return initialData[index.get()];
   },
 });
 

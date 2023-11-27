@@ -1,4 +1,6 @@
 <template name="feed">
-  <div class="rounded-lg border-solid">{{> captcha this}}</div>
+  <div class="rounded-lg border-solid" style="opacity:{{hider}}">
+    {{> captcha this}}
+  </div>
   {{> challenge this}}
 </template>
