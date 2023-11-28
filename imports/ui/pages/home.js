@@ -189,9 +189,9 @@ Template.home.helpers({
 });
 
 Template.home.events({
-  "click .pageContainer"() {
-    document.getElementsByClassName("challengeInput")[0].focus();
-  },
+  // "click .pageContainer"() {
+  //   document.getElementsByClassName("challengeInput")[0].focus();
+  // },
 });
 
 clearData = function () {
