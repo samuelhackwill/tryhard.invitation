@@ -4,33 +4,7 @@ import "../layouts/feed.js";
 
 export let index = new ReactiveVar(0);
 
-// const data = [
-//   "J'ai la joie",
-//   "de vous",
-//   "inviter à",
-//   "la première",
-//   "présentation",
-//   "publique de",
-//   "mon prochain",
-//   "spectacle en",
-//   "cours d'écriture",
-//   "TRYHARD",
-//   "Cette *présentation*",
-//   "aura lieu",
-//   "ce vendredi",
-//   "1er Décembre",
-//   "2023 entre",
-//   "18h30 et",
-//   "19h30",
-//   "à La Bellone",
-//   "Bruxelles.",
-//   "par ailleurs",
-//   "bravo!",
-//   "vous n'êtes",
-//   "pas un robot.",
-// ];
-
-const initialData = [
+initialData = [
   "bonjour cryptique",
   "coucou hasardeux",
   "salut hypocrite",
@@ -42,7 +16,7 @@ const initialData = [
   "habile buongiorno",
 ];
 
-const aurevoirs = [
+aurevoirs = [
   "goodbye",
   "farewell",
   "see you later",
@@ -62,7 +36,6 @@ const aurevoirs = [
   "addio",
   "ciao",
   "a presto",
-  "adiós",
   "hasta luego",
   "hasta pronto",
   "nos vemos",
@@ -97,56 +70,56 @@ const aurevoirs = [
   "arrivederci",
 ];
 
-const moreBonjours = [
-  "Hello",
-  "Hi",
-  "Hey",
-  "Bonjour",
-  "Salut",
-  "Coucou",
-  "Salutations",
-  "Grüezi",
-  "Guten Tag",
-  "Hallo",
-  "Servus",
-  "Buongiorno",
-  "Ciao",
-  "Salve",
-  "Salutoni",
-  "Hola",
-  "Buenas",
-  "Qué tal",
-  "Hej",
-  "Tja",
-  "Labas",
-  "Diena",
-  "Sveiki",
-  "Hei",
-  "Bom dia",
-  "Oi",
-  "Alô",
-  "Dia dhuit",
-  "Haigh",
-  "Hullo",
-  "Bonny morn",
-  "Aye",
-  "Grüß Gott",
-  "Hallo",
-  "Hoi",
-  "Buna",
-  "Alo",
-  "Szia",
-  "Üdvözlet",
-  "Hallo",
-  "Hoi",
-  "Dag",
-  "Bonghjornu",
-  "Salute",
-  "Salutu",
-  "Oghje",
+moreBonjours = [
+  "hello",
+  "hi",
+  "hey",
+  "bonjour",
+  "salut",
+  "coucou",
+  "salutations",
+  "grüezi",
+  "guten tag",
+  "hallo",
+  "servus",
+  "buongiorno",
+  "ciao",
+  "salve",
+  "salutoni",
+  "hola",
+  "buenas",
+  "qué tal",
+  "hej",
+  "tja",
+  "labas",
+  "diena",
+  "sveiki",
+  "hei",
+  "bom dia",
+  "oi",
+  "alô",
+  "dia dhuit",
+  "haigh",
+  "hullo",
+  "bonny morn",
+  "aye",
+  "grüss gott",
+  "hallo",
+  "hoi",
+  "buna",
+  "alo",
+  "szia",
+  "üdvözlet",
+  "hallo",
+  "hoi",
+  "dag",
+  "bonghjornu",
+  "salute",
+  "salutu",
+  "oghje",
 ];
 
-const moreAdjectifs = [
+moreAdjectifs = [
   "apathique",
   "déterminé",
   "désinvolte",
@@ -181,20 +154,36 @@ const moreAdjectifs = [
 ];
 
 Template.home.onCreated(function () {
+  console.log(
+    "has visited before? ",
+    localStorage.getItem("visited") == "true"
+  );
+
+  shuffleArray(aurevoirs);
+  shuffleArray(moreBonjours);
+  shuffleArray(moreAdjectifs);
+
+  if (localStorage.getItem("visited") == "true") {
+    initialData = [];
+    for (let index = 0; index < 10; index++) {
+      var moreBonjour = moreBonjours.shift();
+      var adjectif = moreAdjectifs.shift();
+      initialData.push(moreBonjour + " " + adjectif);
+    }
+  }
+
+  localStorage.setItem("visited", "true");
   console.log(this.data.finished);
 });
 
 Template.home.helpers({
   theCaptcha() {
     if (index.get() >= initialData.length) {
-      var aurevoir = aurevoirs[Math.floor(Math.random() * aurevoirs.length)];
-      var adjectif =
-        moreAdjectifs[Math.floor(Math.random() * moreAdjectifs.length)];
+      var aurevoir = aurevoirs.shift();
+      var adjectif = moreAdjectifs.shift();
       return aurevoir + " " + adjectif;
     }
 
-    // TODO :
-    // if cookie is present, directly serve generative stuff
     return initialData[index.get()];
   },
 });
@@ -204,3 +193,14 @@ Template.home.events({
     document.getElementsByClassName("challengeInput")[0].focus();
   },
 });
+
+clearData = function () {
+  localStorage.removeItem("visited");
+};
+
+shuffleArray = function (array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+};

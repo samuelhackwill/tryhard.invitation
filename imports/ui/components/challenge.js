@@ -2,7 +2,7 @@ import "./challenge.html";
 
 import { index } from "../pages/home.js";
 
-export const hasFinished = new ReactiveVar(false);
+import { State } from "../layouts/feed.js";
 
 Template.challenge.onCreated(function () {
   this.hasInteracted = new ReactiveVar(false);
@@ -30,9 +30,6 @@ Template.challenge.events({
       if (e.currentTarget.value == this) {
         e.currentTarget.value = "";
         index.set(index.get() + 1);
-        // timeEnd = new Date();
-        // score = timeEnd - timeStart;
-        // secs = score / 1000;
         document.getElementById("challengeStatus").innerHTML = "✅ ";
       } else {
         document.getElementById("challengeStatus").innerHTML = "❎ ";
@@ -55,7 +52,8 @@ startCounter = function () {
       secCount = Number(secs) - 1;
       if (secCount < 0) {
         clearInterval(timer);
-        hasFinished.set(true);
+        State.set("loggingScore");
+        document.getElementById("challengeInput").value = "";
         document.getElementById("challengeTimerSecs").innerHTML = "00";
         document.getElementById("challengeTimerDecs").innerHTML = "00";
         return;
@@ -67,3 +65,13 @@ startCounter = function () {
     document.getElementById("challengeTimerDecs").innerHTML = newDecs;
   }, 10);
 };
+
+Template.challenge.helpers({
+  hider() {
+    if (State.get() != "playing") {
+      return 0;
+    } else {
+      return 1;
+    }
+  },
+});

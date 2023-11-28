@@ -6,6 +6,7 @@ Template.captcha.helpers({
   },
   ranId() {
     _id = this.replace(/[ ',;"()]/g, "");
-    return _id;
+    __id = _id.normalize("NFD").replace(/[\u0300-\u036f]/g, "");
+    return __id;
   },
 });
