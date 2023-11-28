@@ -2,6 +2,8 @@ import "./home.html";
 
 import "../layouts/feed.js";
 
+import { State } from "../layouts/feed.js";
+
 export let index = new ReactiveVar(0);
 
 initialData = [
@@ -126,6 +128,7 @@ moreAdjectifs = [
   "résolu",
   "définitif",
   "terminal",
+  "amical",
   "sceptique",
   "empathique",
   "indifférent",
@@ -189,9 +192,13 @@ Template.home.helpers({
 });
 
 Template.home.events({
-  // "click .pageContainer"() {
-  //   document.getElementsByClassName("challengeInput")[0].focus();
-  // },
+  "click .pageContainer"() {
+    if (State.get() == "loggingScore") {
+      return;
+    } else {
+      document.getElementsByClassName("challengeInput")[0].focus();
+    }
+  },
 });
 
 clearData = function () {

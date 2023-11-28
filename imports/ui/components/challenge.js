@@ -1,8 +1,10 @@
 import "./challenge.html";
 
 import { index } from "../pages/home.js";
-
 import { State } from "../layouts/feed.js";
+
+export const TotalKeyStrokes = new ReactiveVar(0);
+export const TotalCompletedChars = new ReactiveVar(0);
 
 Template.challenge.onCreated(function () {
   this.hasInteracted = new ReactiveVar(false);
@@ -18,6 +20,24 @@ Template.challenge.events({
     }
   },
 
+  "keydown .challengeInput"(e) {
+    // console.log(
+    //   "typing ",
+    //   e.originalEvent.key,
+    //   " at position ",
+    //   e.currentTarget.value.length + 1
+    // );
+    // console.log("checking for ", this[e.currentTarget.value.length]);
+
+    if (e.originalEvent.key == this[e.currentTarget.value.length]) {
+      document.getElementById("challengeStatus").innerHTML = "✅ ";
+    } else {
+      document.getElementById("challengeStatus").innerHTML = "❎ ";
+    }
+
+    TotalKeyStrokes.set(TotalKeyStrokes.get() + 1);
+  },
+
   "keyup .challengeInput"(e) {
     const instance = Template.instance();
 
@@ -30,9 +50,7 @@ Template.challenge.events({
       if (e.currentTarget.value == this) {
         e.currentTarget.value = "";
         index.set(index.get() + 1);
-        document.getElementById("challengeStatus").innerHTML = "✅ ";
-      } else {
-        document.getElementById("challengeStatus").innerHTML = "❎ ";
+        TotalCompletedChars.set(TotalCompletedChars.get() + this.length);
       }
     }
   },
