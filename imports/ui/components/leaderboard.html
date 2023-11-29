@@ -1,6 +1,7 @@
 <template name="leaderboard">
   <div class="self-center">Classement provisoire :</div>
-  <div class="grid auto-cols-fr grid-cols-3 justify-center">
+  <div class="grid auto-cols-fr grid-cols-4 justify-center">
+    <div class="w-24">#</div>
     <div class="w-28">pseudo</div>
     <div class="w-28">captchas</div>
     <div class="w-28">précision</div>
@@ -11,13 +12,16 @@
     class="h-[50vh] overflow-scroll opacity-0 transition-opacity duration-1000"
     style="opacity:{{shower}}"
   >
+    {{#each getScore}}
     <div
-      class="grid auto-cols-fr grid-cols-3 justify-center odd:bg-green-100 even:bg-red-100"
+      class="grid auto-cols-fr grid-cols-4 justify-center odd:bg-green-100 even:bg-red-100"
     >
-      <div class="w-28">BOB</div>
-      <div class="w-28">10</div>
-      <div class="w-28">21%</div>
+      <div class="w-24">{{ranker @index}}</div>
+      <div class="w-28">{{pseudo}}</div>
+      <div class="w-28">{{captchas}}</div>
+      <div class="w-28">{{precision}} %</div>
     </div>
+    {{/each}}
   </div>
   <button
     onclick="location.reload()"

@@ -4,16 +4,9 @@ import "../../ui/pages/home.js";
 
 flow = FlowRouter;
 
-FlowRouter.route("/:finished/", {
+FlowRouter.route("/", {
   name: "home",
   action(params) {
     this.render("home", params);
-  },
-});
-
-FlowRouter.route("/", {
-  name: "default",
-  action() {
-    FlowRouter.go("/incomplete");
   },
 });

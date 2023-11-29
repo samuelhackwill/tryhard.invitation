@@ -27,6 +27,15 @@ Template.scoreLogger.helpers({
 
 Template.scoreLogger.events({
   "click #scoreLoggerSubmit"() {
+    data = {};
+    data.pseudo = document.getElementById("scoreLoggerPseudo").value;
+    data.scoreCaptchas = index.get();
+    data.scorePrecision = Math.round(
+      (TotalCompletedChars.get() / TotalKeyStrokes.get()) * 100
+    );
+
+    Meteor.call("insertScore", data);
+
     document.getElementById("scoreLogger").classList.add("opacity-0");
     setTimeout(() => {
       State.set("finished");
