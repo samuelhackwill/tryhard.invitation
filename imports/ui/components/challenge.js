@@ -35,7 +35,13 @@ Template.challenge.events({
       document.getElementById("challengeStatus").innerHTML = "❎ ";
     }
 
-    TotalKeyStrokes.set(TotalKeyStrokes.get() + 1);
+    console.log(e.originalEvent.key);
+
+    if (e.originalEvent.key == "Shift" || e.originalEvent.key == "Dead") {
+      console.log("don't add shift!");
+    } else {
+      TotalKeyStrokes.set(TotalKeyStrokes.get() + 1);
+    }
   },
 
   "keyup .challengeInput"(e) {
