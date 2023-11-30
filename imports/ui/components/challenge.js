@@ -11,6 +11,10 @@ Template.challenge.onCreated(function () {
 });
 
 Template.challenge.events({
+  "click #challengeLeaderboard"() {
+    State.set("finished");
+  },
+
   "keydown .challengeInput"(e) {
     keyPress = e.originalEvent.key;
     if (keyPress.startsWith("Arrow")) {
