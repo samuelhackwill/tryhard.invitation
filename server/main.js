@@ -2,6 +2,17 @@ import { Meteor } from "meteor/meteor";
 import "/imports/startup/server";
 import { WebApp } from "meteor/webapp";
 
+const description =
+  "Jeu de vitesse où il faut remplir des captchas le plus vite possible. Utilisé lors du tout premier playtest, ça a créé une ambiance de stade mais l'effet die & retry était éventuellement sympa.";
+
+WebApp.connectHandlers.use("/api/hello", (req, res, next) => {
+  res.setHeader("Access-Control-Allow-Origin", "*"); // Allow all origins (use specific domains for more security)
+  res.setHeader("Content-Type", "text/plain");
+
+  res.write(description);
+  res.end();
+});
+
 Meteor.startup(() => {
   // code to run on server at startup
 });
